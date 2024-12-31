@@ -7,11 +7,12 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Todo struct {
@@ -23,11 +24,14 @@ type Todo struct {
 var collection *mongo.Collection
 
 func main() {
-	fmt.Println("hello world")
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file", err)
+	if os.Getenv("ENV")!="production"{
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file", err)
+		}
+
 	}
+	
 	MONGO_URI := os.Getenv("MONGO_URI")
 	clientOptions := options.Client().ApplyURI(MONGO_URI)
 	client, err := mongo.Connect(context.Background(), clientOptions)
@@ -43,6 +47,10 @@ func main() {
 	fmt.Println("connected to MongoDB..")
 	collection = client.Database("golang").Collection("todos")
 	app := fiber.New()
+	// app.Use(cors.New(cors.Config{
+	// 	AllowOrigins:"http://localhost:5173",
+	// 	AllowHeaders: "Origin,Content-Type,Accept",
+	// }))
 	app.Get("/api/todos", getTodos)
 	app.Post("/api/todos", createTodo)
 	app.Patch("/api/todos/:id", updateTodo)
@@ -50,6 +58,9 @@ func main() {
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "4000"
+	}
+	if os.Getenv("ENV")=="production"{
+		app.Static("/","./client/dist")
 	}
 	log.Fatal(app.Listen(":" + PORT))
 }

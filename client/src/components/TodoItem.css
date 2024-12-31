@@ -1,0 +1,86 @@
+TodoItem.css
+
+.todo-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .todo-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .todo-text {
+    color: #fff;
+    margin: 0;
+  }
+  
+  .todo-text.completed {
+    text-decoration: line-through;
+    color: #4caf50;
+  }
+  
+  .todo-text.in-progress {
+    color: #ff9800;
+  }
+  
+  .badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+  
+  .badge.completed {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .badge.in-progress {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .check-icon,
+  .delete-icon {
+    cursor: pointer;
+  }
+  
+  .check-icon:hover {
+    color: #4caf50;
+  }
+  
+  .delete-icon:hover {
+    color: #f44336;
+  }
+  
+  /* Spinner for loading state */
+  .spinner {
+    border: 2px solid transparent;
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
