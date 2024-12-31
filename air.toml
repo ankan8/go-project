@@ -1,0 +1,19 @@
+# Config file for Air - Live Reload for Go
+
+# Root directory for the project
+root = "."
+tmp_dir = "tmp"
+
+# Commands
+[build]
+cmd = "go build -o {{.Output}} {{.Input}}"
+bin = "main"
+
+exclude = [
+    "tmp/*",
+    "client/*"
+    
+]
+include=["**/*.go"]
+
+ignore=["tmp/*"]
